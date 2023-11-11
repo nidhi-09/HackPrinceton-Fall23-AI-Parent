@@ -1,4 +1,3 @@
-#from .pyasynccai import PyAsyncCAI
 from contextlib import contextmanager
 import tls_client
 import json
