@@ -7,9 +7,6 @@ char = input('Enter CHAR: ')
 if char.lower() == 'father':
     char = 'uMnXQwm3ii7GGQUUExv4yfu4v_2_wYec4u-7K3H6Mbw'
 
-elif char.lower() == 'mother':
-    char = 'EnLXQzZFifUbx1fE9gQQe4fZXYeK4iPVMP3h6fz4o2A'
-
 chat = client.chat.get_chat(char)
 
 participants = chat['participants']
