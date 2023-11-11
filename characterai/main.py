@@ -2,11 +2,10 @@ from characterai import PyCAI
 
 client = PyCAI('a5c2f69274c87103925b32bd67ed45cff0b15957')
 
-char = input('Enter CHAR: ') .lower()
+char = input('Enter CHAR: ')
 
-if char == 'father':
+if char.lower() == 'father':
     char = 'uMnXQwm3ii7GGQUUExv4yfu4v_2_wYec4u-7K3H6Mbw'
-
 
 chat = client.chat.get_chat(char)
 
