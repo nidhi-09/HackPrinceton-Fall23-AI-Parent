@@ -9,6 +9,7 @@ import SwiftUI
 
 struct LoginView: View {
     @StateObject private var loginViewModel = LoginViewModel()
+    
 
     var body: some View {
         ZStack {
@@ -25,7 +26,6 @@ struct LoginView: View {
                 GuidanceHomeView()
             }
         }
-
     }
     var title: some View {
         Text("Login")
@@ -53,6 +53,7 @@ struct LoginView: View {
                     )
             .padding()
     }
+    
     var loginButton: some View {
         Button(action: loginViewModel.login) {
             Text("Sign In")

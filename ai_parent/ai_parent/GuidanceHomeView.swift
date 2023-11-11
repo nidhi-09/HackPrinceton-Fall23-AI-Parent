@@ -8,8 +8,24 @@
 import SwiftUI
 
 struct GuidanceHomeView: View {
+    @State private var isAnimating = false // State for animation toggle
+    @State private var shakes = 0 // State to control the number of shakes
+    @State private var scale: CGFloat = 1.0
+
     @StateObject private var viewModel = GuidanceViewModel()
 
+    struct ShakeEffect: GeometryEffect {
+        var amount: CGFloat = 10
+        var shakesPerUnit: CGFloat = 3
+        var animatableData: CGFloat
+
+        func effectValue(size: CGSize) -> ProjectionTransform {
+            ProjectionTransform(CGAffineTransform(translationX:
+                amount * sin(animatableData * .pi * shakesPerUnit),
+                y: 0))
+        }
+    }
+    
     var body: some View {
         ZStack {
 //            Image("dunks").resizable().edgesIgnoringSafeArea(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
@@ -33,7 +49,6 @@ struct GuidanceHomeView: View {
                 .padding(.bottom, 50) // Space from the bottom
             Spacer()
         }
-
     }
     
     var prompt: some View {
@@ -45,19 +60,35 @@ struct GuidanceHomeView: View {
             .background(Color.white) // White background for the TextField
             .cornerRadius(10) // Rounded corners for the TextField background
             .padding(.horizontal, 20) // Horizontal padding for the TextField
-        
     }
     
     var promptButton: some View {
-        Button(action: {
-            viewModel.submitPrompt()
-        }) {
-            Image(systemName: "arrow.right.circle.fill")
-                .font(.largeTitle) // Size of the SF Symbol
-                .foregroundColor(Color.green.opacity(0.65)) // Warm color for the icon
+            Button(action: {
+                // Animate the button to squeeze down
+                withAnimation(.easeOut(duration: 0.1)) {
+                    scale = 0.75
+                }
+                // After a short delay, animate it to expand out
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                    withAnimation(.easeInOut(duration: 0.2)) {
+                        scale = 1.2
+                    }
+                }
+                // Finally, bring it back to the original size
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    withAnimation(.spring()) {
+                        scale = 1.0
+                    }
+                }
+                viewModel.submitPrompt()
+            }) {
+                Image(systemName: "arrow.right.circle.fill")
+                    .font(.largeTitle)
+                    .foregroundColor(Color.green.opacity(0.65))
+                    .scaleEffect(scale)
+            }
+            .padding(.bottom, 20)
         }
-        .padding(.bottom, 20) // Push the button up a little from the bottom edge
-    }
     
     
     var apiResponse: some View {

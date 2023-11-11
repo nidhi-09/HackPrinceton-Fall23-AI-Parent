@@ -21,6 +21,8 @@
 		9128D6912AFF3DAA0006FB22 /* GuidanceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9128D6902AFF3DAA0006FB22 /* GuidanceModel.swift */; };
 		917E26512AFF626A003900F1 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 917E26502AFF626A003900F1 /* LoginView.swift */; };
 		917E26532AFF628E003900F1 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 917E26522AFF628E003900F1 /* LoginViewModel.swift */; };
+		917E26592B000AE1003900F1 /* ChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 917E26582B000AE1003900F1 /* ChatViewModel.swift */; };
+		917E265B2B000B03003900F1 /* ChatModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 917E265A2B000B03003900F1 /* ChatModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +60,8 @@
 		9128D6902AFF3DAA0006FB22 /* GuidanceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuidanceModel.swift; sourceTree = "<group>"; };
 		917E26502AFF626A003900F1 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		917E26522AFF628E003900F1 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		917E26582B000AE1003900F1 /* ChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewModel.swift; sourceTree = "<group>"; };
+		917E265A2B000B03003900F1 /* ChatModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -158,6 +162,7 @@
 		9128D68B2AFF3CCD0006FB22 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				917E265A2B000B03003900F1 /* ChatModel.swift */,
 				9128D6902AFF3DAA0006FB22 /* GuidanceModel.swift */,
 			);
 			name = Model;
@@ -166,6 +171,7 @@
 		9128D68D2AFF3D340006FB22 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				917E26582B000AE1003900F1 /* ChatViewModel.swift */,
 				9128D68E2AFF3D550006FB22 /* GuidanceViewModel.swift */,
 				917E26522AFF628E003900F1 /* LoginViewModel.swift */,
 			);
@@ -310,7 +316,9 @@
 				9128D6912AFF3DAA0006FB22 /* GuidanceModel.swift in Sources */,
 				917E26512AFF626A003900F1 /* LoginView.swift in Sources */,
 				9128D6862AFF37E10006FB22 /* GuidanceHomeView.swift in Sources */,
+				917E26592B000AE1003900F1 /* ChatViewModel.swift in Sources */,
 				917E26532AFF628E003900F1 /* LoginViewModel.swift in Sources */,
+				917E265B2B000B03003900F1 /* ChatModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
