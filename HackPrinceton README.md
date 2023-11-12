@@ -13,9 +13,7 @@ Features:
   - guide children
   - domestic abuse detection
   - adaptable parental figure (provide accent)
-  - add bond level(leveling up trust with AI Parent)
-  - intereact with dead parents- restore memories of dead loved ones
-  - have the user feel
+  - add bond level(leveling up trust with AI Parent)-- MAYBE
 
 
 NECESSITIES:
@@ -27,9 +25,9 @@ Implementations:
   -make a PowerPoint presentation
   -Recommendation system- take variables, weigh them, carry out recommendation
   -Level increase based on- child's performance and guardian's feedback -- leveling up is based primarily on the child's performance 
-  -Subscription-based- $10/month and $99/year(affordable) -- DON'T INCLUDE IN PRESENTATION BECAUSE OF PROGRESSIVE DEMOCRATIC IDEALS
+  -Subscription: free tier(limited features) paid tiers(exclusive features): $7.99/month and $60/year
   -implement face recognition (to identify each child and make their experience with AI Parent unique)
   -use CharacterAI's API for AI Parent's personalities
   -implement an interactive ai avatar(design using MidJourney)
   -use D-ID's API for avatar speech (implement accents)
-  -Use AR to bring AI parent avatar into the real-world using echo3D
+  -Use AR to bring AI parent avatar into the real world using echo3D
