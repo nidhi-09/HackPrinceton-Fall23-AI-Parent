@@ -103,7 +103,7 @@ struct GuidanceHomeView: View {
     
     var showResponse: some View {
         // Display the text that has been "typed" out.
-        Text(viewModel.displayedText)
+        Text(viewModel.responseText)
             .padding()
             .transition(.opacity) // Fade in/out the text as it appears/disappears
     }

@@ -8,7 +8,7 @@
 import Foundation
 
 struct GuidanceModel {
-    var prompt: String = ""
+    var prompt: String = "" // user's input
     
     // Simulates interaction with an API to submit the prompt.
     func submitPrompt(completion: @escaping (Result<String, Error>) -> Void) {

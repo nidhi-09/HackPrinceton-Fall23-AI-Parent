@@ -14,6 +14,9 @@ class GuidanceViewModel: ObservableObject {
     @Published var isTyping = false
     @Published var isWaitingForResponse = false
     @Published var userInput: String = ""
+    @Published var responseText: String = "Placeholder"
+    // array of chatResponses
+    
 
     private var model = GuidanceModel()
     private var fullResponse: String = ""
@@ -26,21 +29,9 @@ class GuidanceViewModel: ObservableObject {
         model.prompt = userInput
         
         // Call the model to submit the prompt.
-        model.submitPrompt { [weak self] result in
-            // When the result comes back, we are no longer waiting.
-            DispatchQueue.main.async {
-                self?.isWaitingForResponse = false
-                switch result {
-                case .success(let response):
-                    // If success, start the typing effect with the response.
-                    self?.prepareTypingEffect(with: response)
-                case .failure(let error):
-                    // If failure, show the error message.
-                    self?.displayedText = "Error: \(error.localizedDescription)"
-                    self?.isTyping = false
-                }
-            }
-        }
+        fetchResponse(prompt: userInput)
+        self.isWaitingForResponse = false
+        
     }
     
     // Prepare for typing effect by setting up initial state.
@@ -74,6 +65,43 @@ class GuidanceViewModel: ObservableObject {
             isTyping = false
             typingTimer?.invalidate()
         }
+    }
+    
+    
+// Fetch Response for local API
+    func fetchResponse(prompt: String) {
+        // Construct the URL and request
+        guard let url = URL(string: "http://localhost:9988/chat") else {
+            return
+        }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        // Convert your prompt into JSON
+        let body: [String: Any] = ["prompt": prompt]
+        request.httpBody = try? JSONSerialization.data(withJSONObject: body)
+        
+        // Perform the network request
+        let task = URLSession.shared.dataTask(with: request) { [weak self] data, response, error in
+            if let error = error {
+                // Handle the error scenario (e.g., network error)
+                print("Network error: \(error.localizedDescription)")
+                self?.responseText = "Error"
+                return
+            }
+            
+            // Decode the JSON data
+            if let data = data, let rawJSON = String(data: data, encoding: .utf8) {
+                    print("Received raw data: \(rawJSON)")
+                    DispatchQueue.main.async {
+                        self?.responseText += rawJSON + "\n" // Temporarily display the raw JSON in the UI for debugging
+                    }
+                }
+        }
+        
+        task.resume()
     }
     
     // Invalidate the timer when the ViewModel deinitializes.
