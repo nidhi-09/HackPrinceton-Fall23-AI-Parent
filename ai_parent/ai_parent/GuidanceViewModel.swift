@@ -14,9 +14,9 @@ class GuidanceViewModel: ObservableObject {
     @Published var isTyping = false
     @Published var isWaitingForResponse = false
     @Published var userInput: String = ""
-    @Published var responseText: String = "Placeholder"
+    @Published var responseText: String = ""
     // array of chatResponses
-    
+
 
     private var model = GuidanceModel()
     private var fullResponse: String = ""
@@ -30,15 +30,13 @@ class GuidanceViewModel: ObservableObject {
         
         // Call the model to submit the prompt.
         fetchResponse(prompt: userInput)
-        self.isWaitingForResponse = false
-        
     }
     
     // Prepare for typing effect by setting up initial state.
     private func prepareTypingEffect(with response: String) {
         fullResponse = response
         currentIndex = 0
-        displayedText = ""
+//        displayedText = ""
         isTyping = true
         startTypingEffect()
     }
@@ -46,8 +44,9 @@ class GuidanceViewModel: ObservableObject {
     // Start the timer that simulates typing effect.
     private func startTypingEffect() {
         typingTimer?.invalidate()
-        
-        typingTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { [weak self] timer in
+        self.isWaitingForResponse = false
+        self.displayedText += "\n" + "\n"
+        typingTimer = Timer.scheduledTimer(withTimeInterval: 0.03, repeats: true) { [weak self] timer in
             DispatchQueue.main.async {
                 self?.typeNextCharacter()
             }
@@ -96,8 +95,9 @@ class GuidanceViewModel: ObservableObject {
             if let data = data, let rawJSON = String(data: data, encoding: .utf8) {
                     print("Received raw data: \(rawJSON)")
                     DispatchQueue.main.async {
-                        self?.responseText += rawJSON + "\n" // Temporarily display the raw JSON in the UI for debugging
+                        self?.prepareTypingEffect(with: rawJSON)// Temporarily display the raw JSON in the UI for debugging
                     }
+                
                 }
         }
         

@@ -33,6 +33,8 @@ struct GuidanceHomeView: View {
     var title: some View {
         Group {
             Spacer()
+            Spacer()
+            Spacer()
             Text("Guidance AI")
                 .font(.largeTitle) // Large and easy to read
                 .fontWeight(.bold) // Make it bold
@@ -72,6 +74,7 @@ struct GuidanceHomeView: View {
                     }
                 }
                 viewModel.submitPrompt()
+                viewModel.userInput = ""
             }) {
                 Image(systemName: "arrow.right.circle.fill")
                     .font(.largeTitle)
@@ -99,13 +102,31 @@ struct GuidanceHomeView: View {
         ProgressView()
             .progressViewStyle(CircularProgressViewStyle(tint: .green))
             .scaleEffect(1.5)
+            .frame(maxWidth: .infinity, maxHeight: 600) // Fixed height, maximum width
+            .background(Color.white.opacity(0.1)) // Slightly opaque background to indicate area
+            .overlay(
+                RoundedRectangle(cornerRadius: 10) // Rounded corners for the overlay border
+                    .stroke(Color.green.opacity(0.05), lineWidth: 1) // Green border
+            )
+            .cornerRadius(10) // Rounded corners for the ScrollView
+            .padding(.horizontal, 20) // Horizontal padding to match the prompt's padding
     }
     
     var showResponse: some View {
-        // Display the text that has been "typed" out.
-        Text(viewModel.responseText)
-            .padding()
-            .transition(.opacity) // Fade in/out the text as it appears/disappears
+        // Display the text that has been "typed" out within a bounded ScrollView
+        ScrollView {
+            Text(viewModel.displayedText)
+                .padding()
+                .transition(.opacity) // Fade in/out the text as it appears/disappears
+        }
+        .frame(maxWidth: .infinity, maxHeight: 600) // Fixed height, maximum width
+        .background(Color.white.opacity(0.1)) // Slightly opaque background to indicate area
+        .overlay(
+            RoundedRectangle(cornerRadius: 10) // Rounded corners for the overlay border
+                .stroke(Color.green.opacity(0.05), lineWidth: 1) // Green border
+        )
+        .cornerRadius(10) // Rounded corners for the ScrollView
+        .padding(.horizontal, 20) // Horizontal padding to match the prompt's padding
     }
 }
 
