@@ -12,11 +12,28 @@ struct CreateAccountView: View {
     @State private var name: String = ""
     @State private var age: String = ""
     @State private var isAccountCreated: Bool = false
-    let pastelGreen = Color(#colorLiteral(red: 0.678, green: 1.0, blue: 0.784, alpha: 1))
-    
+    let pastelGreen = Color(red: 88 / 255, green: 204 / 255, blue: 2 / 255)
+    let secondaryColor = Color(red: 28 / 255, green: 176 / 255, blue: 246 / 255) // Define the secondary color as blue.
+    let backgroundColor = Color.white // Define the background color as white.
+
     var body: some View {
         ZStack {
-            pastelGreen.edgesIgnoringSafeArea(.all)
+            Color.clear
+                .edgesIgnoringSafeArea(.all)
+                .background(
+                    Image("background") // Your background image
+                        .resizable()
+                        .scaledToFill() // Fill the screen while maintaining aspect ratio
+                        .edgesIgnoringSafeArea(.all) // Allow the image to extend to the edges of the screen
+                )
+            VStack {
+                Image("coe")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(maxWidth: 180)
+                    .padding()
+                Spacer()
+            }
             VStack(spacing: 20) {
                 Spacer()
                 title
@@ -25,13 +42,14 @@ struct CreateAccountView: View {
                     ageInput
                 }
                 .padding()
-                .background(RoundedRectangle(cornerRadius: 20).fill(Color.white).shadow(radius: 10))
+
+                .background(RoundedRectangle(cornerRadius: 20).fill(backgroundColor).shadow(radius: 3.5)).opacity(0.8)
                 createAccountButton
                 Spacer()
             }
             .padding()
             .fullScreenCover(isPresented: $isAccountCreated) {
-                GuidanceHomeView()
+                GuidanceHomeView() // Assuming this view is defined elsewhere.
             }
         }
     }
@@ -40,14 +58,14 @@ struct CreateAccountView: View {
         Text("Create Account")
             .font(.title)
             .fontWeight(.bold)
-            .foregroundColor(.white)
+            .foregroundColor(.black)
             .padding(.bottom, 20)
     }
 
     var nameInput: some View {
         HStack {
             Image(systemName: "person.fill")
-                .foregroundColor(pastelGreen)
+                .foregroundColor(secondaryColor)
                 .padding(.leading)
             TextField("Name", text: $name)
         }
@@ -55,7 +73,7 @@ struct CreateAccountView: View {
         .background(RoundedRectangle(cornerRadius: 14).fill(Color.white.opacity(0.7)))
         .overlay(
             RoundedRectangle(cornerRadius: 14)
-                .stroke(pastelGreen, lineWidth: 1)
+                .stroke(secondaryColor, lineWidth: 1)
         )
         .padding(.horizontal)
         .scaleEffect(name.isEmpty ? 1 : 1.1)
@@ -65,7 +83,7 @@ struct CreateAccountView: View {
     var ageInput: some View {
         HStack {
             Image(systemName: "calendar")
-                .foregroundColor(pastelGreen)
+                .foregroundColor(secondaryColor)
                 .padding(.leading)
             TextField("Age", text: $age)
                 .keyboardType(.numberPad)
@@ -74,7 +92,7 @@ struct CreateAccountView: View {
         .background(RoundedRectangle(cornerRadius: 14).fill(Color.white.opacity(0.7)))
         .overlay(
             RoundedRectangle(cornerRadius: 14)
-                .stroke(pastelGreen, lineWidth: 1)
+                .stroke(secondaryColor, lineWidth: 1)
         )
         .padding(.horizontal)
         .scaleEffect(age.isEmpty ? 1 : 1.1)

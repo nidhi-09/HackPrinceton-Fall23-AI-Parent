@@ -17,12 +17,17 @@ struct GuidanceHomeView: View {
 
     @StateObject private var viewModel = GuidanceViewModel()
     
-
-    
     var body: some View {
         ZStack {
-//            Image("dunks").resizable().edgesIgnoringSafeArea(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
-            Color.white.opacity(0.1).edgesIgnoringSafeArea(.all)
+            Color.clear
+                .edgesIgnoringSafeArea(.all)
+                .background(
+                    Image("background") // Your background image
+                        .resizable()
+                        .scaledToFill() // Fill the screen while maintaining aspect ratio
+                        .edgesIgnoringSafeArea(.all) // Allow the image to extend to the edges of the screen
+                )
+            
             VStack {
                 title
                 apiResponse
@@ -37,7 +42,11 @@ struct GuidanceHomeView: View {
     
     struct TutorialPopUpView: View {
         @Binding var showTutorial: Bool
-        let cuteGreen = Color(#colorLiteral(red: 0.678, green: 1.0, blue: 0.784, alpha: 1)) // A brighter pastel green
+        let pastelGreen = Color(red: 88 / 255, green: 204 / 255, blue: 2 / 255)
+        let polar = Color(red: 247 / 255, green: 247 / 255, blue: 247 / 255)
+        let secondaryColor = Color(red: 28 / 255, green: 176 / 255, blue: 246 / 255) // Define the secondary color as blue.
+        
+        
 
         var body: some View {
             VStack {
@@ -56,8 +65,8 @@ struct GuidanceHomeView: View {
                         }
                     }
                     
-                    VStack(alignment: .leading, spacing: 12) {
-                        Text("Welcome to Parent AI!")
+                    VStack(alignment: .center, spacing: 12) {
+                        Text("Welcome to Coe!")
                             .font(.title2)
                             .fontWeight(.bold)
                             .foregroundColor(.black)
@@ -74,14 +83,15 @@ struct GuidanceHomeView: View {
                     .shadow(color: .gray.opacity(0.4), radius: 20, x: 0, y: 10)
                     .overlay(
                         RoundedRectangle(cornerRadius: 25)
-                            .stroke(cuteGreen, lineWidth: 4)
+                            .stroke(Color(red: 67 / 255, green: 192 / 255, blue: 246 / 255) // Define the secondary color as blue.
+, lineWidth: 4)
                     )
                 }
                 .padding(.horizontal)
                 Spacer()
             }
             .background(
-                cuteGreen.opacity(0.4)
+                polar.opacity(0.4)
                     .edgesIgnoringSafeArea(.all)
                     .onTapGesture {
                         withAnimation {
@@ -100,7 +110,8 @@ struct GuidanceHomeView: View {
         var body: some View {
             HStack {
                 Image(systemName: iconName)
-                    .foregroundColor(.green)
+                    .foregroundColor(Color(red: 28 / 255, green: 176 / 255, blue: 246 / 255) // Define the secondary color as blue.
+)
                     .font(.title3)
                     .frame(width: 30)
                 Text(text)
@@ -118,11 +129,18 @@ struct GuidanceHomeView: View {
             Spacer()
             Spacer()
             Spacer()
-            Text("Parent AI")
-                .font(.largeTitle) // Large and easy to read
-                .fontWeight(.bold) // Make it bold
-                .foregroundColor(Color.green.opacity(0.65)) // Warm color for the text
-                .padding(.bottom, 50) // Space from the bottom
+            VStack {
+                Text("Coe")
+                    .font(.system(size: 70))// Large and easy to read
+                    .fontWeight(.bold) // Make it bold
+                    .foregroundColor(Color.green.opacity(0.65)) // Warm color for the text
+                    .padding(.bottom, 5) // Space from the bottom
+                
+                Text("Co-Parent AI")
+                    .font(.title3)
+                    .italic()
+                    .bold()
+            }
             Spacer()
         }
     }
@@ -193,24 +211,34 @@ struct GuidanceHomeView: View {
             )
             .cornerRadius(10) // Rounded corners for the ScrollView
             .padding(.horizontal, 20) // Horizontal padding to match the prompt's padding
+            .frame(maxWidth: .infinity, maxHeight: 600) // Fixed height, maximum width
+            // Add a semi-transparent white background with a shadow to create the "bubble" effect
+            .background(
+                RoundedRectangle(cornerRadius: 10) // Rounded corners for the bubble background
+                    .fill(Color.white.opacity(0.7)) // Semi-transparent white background
+                    .shadow(color: Color.black.opacity(0.15), radius: 5, x: 0, y: 2) // Soft shadow for depth
+            )
+            .cornerRadius(10) // Rounded corners for the ScrollView
+            .padding(.horizontal, 20) // Horizontal padding to match the prompt's padding
     }
     
     var showResponse: some View {
-        // Display the text that has been "typed" out within a bounded ScrollView
         ScrollView {
             Text(viewModel.displayedText)
                 .padding()
                 .transition(.opacity) // Fade in/out the text as it appears/disappears
         }
         .frame(maxWidth: .infinity, maxHeight: 600) // Fixed height, maximum width
-        .background(Color.white.opacity(0.1)) // Slightly opaque background to indicate area
-        .overlay(
-            RoundedRectangle(cornerRadius: 10) // Rounded corners for the overlay border
-                .stroke(Color.green.opacity(0.05), lineWidth: 1) // Green border
+        // Add a semi-transparent white background with a shadow to create the "bubble" effect
+        .background(
+            RoundedRectangle(cornerRadius: 10) // Rounded corners for the bubble background
+                .fill(Color.white.opacity(0.7)) // Semi-transparent white background
+                .shadow(color: Color.black.opacity(0.15), radius: 5, x: 0, y: 2) // Soft shadow for depth
         )
         .cornerRadius(10) // Rounded corners for the ScrollView
         .padding(.horizontal, 20) // Horizontal padding to match the prompt's padding
     }
+
 }
 
 #Preview {
