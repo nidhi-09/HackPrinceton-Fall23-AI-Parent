@@ -3,18 +3,20 @@
 //  ai_parent
 //
 //  Created by Adolfo Calderon on 11/11/23.
-//
+//v
 
 import SwiftUI
 
-class ChatViewModel {
+class ChatViewModel: ObservableObject {
     
     // The view will bind to this property to display the response
     @Published var responseText: String = ""
+    // array of chatResponses
+    
     
     func fetchResponse(prompt: String) {
         // Construct the URL and request
-        guard let url = URL(string: "https://api.example.com/chat") else {
+        guard let url = URL(string: "http://localhost:9988/chat") else {
             return
         }
         
@@ -37,10 +39,10 @@ class ChatViewModel {
             // Decode the JSON data
             if let data = data {
                 do {
-                    let chatResponse = try JSONDecoder().decode(ChatResponse.self, from: data)
+                    let chatResponse = try JSONDecoder().decode(String.self, from: data)
                     DispatchQueue.main.async {
                         // Update the published property with the response
-                        self?.responseText = chatResponse.text
+                        self?.responseText = chatResponse
                     }
                 } catch {
                     // Handle decoding error

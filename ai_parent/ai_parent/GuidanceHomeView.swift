@@ -13,18 +13,9 @@ struct GuidanceHomeView: View {
     @State private var scale: CGFloat = 1.0
 
     @StateObject private var viewModel = GuidanceViewModel()
+    @StateObject private var chatViewModel = ChatViewModel()
+    
 
-    struct ShakeEffect: GeometryEffect {
-        var amount: CGFloat = 10
-        var shakesPerUnit: CGFloat = 3
-        var animatableData: CGFloat
-
-        func effectValue(size: CGSize) -> ProjectionTransform {
-            ProjectionTransform(CGAffineTransform(translationX:
-                amount * sin(animatableData * .pi * shakesPerUnit),
-                y: 0))
-        }
-    }
     
     var body: some View {
         ZStack {
@@ -71,7 +62,7 @@ struct GuidanceHomeView: View {
                 // After a short delay, animate it to expand out
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                     withAnimation(.easeInOut(duration: 0.2)) {
-                        scale = 1.2
+                        scale = 1.4
                     }
                 }
                 // Finally, bring it back to the original size

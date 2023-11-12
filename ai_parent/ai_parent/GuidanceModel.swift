@@ -18,7 +18,6 @@ struct GuidanceModel {
         
         DispatchQueue.global().asyncAfter(deadline: .now() + 1) {
             let simulatedResponse = "This is a simulated response for the prompt: \(self.prompt)"
-            
             completion(.success(simulatedResponse))
         }
     }
