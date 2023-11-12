@@ -11,9 +11,11 @@ struct GuidanceHomeView: View {
     @State private var isAnimating = false // State for animation toggle
     @State private var shakes = 0 // State to control the number of shakes
     @State private var scale: CGFloat = 1.0
+    
+    @State private var showTutorial = true
+
 
     @StateObject private var viewModel = GuidanceViewModel()
-    @StateObject private var chatViewModel = ChatViewModel()
     
 
     
@@ -27,6 +29,87 @@ struct GuidanceHomeView: View {
                 prompt
                 promptButton
             }
+            if showTutorial {
+                    TutorialPopUpView(showTutorial: $showTutorial)
+                }
+        }
+    }
+    
+    struct TutorialPopUpView: View {
+        @Binding var showTutorial: Bool
+        let cuteGreen = Color(#colorLiteral(red: 0.678, green: 1.0, blue: 0.784, alpha: 1)) // A brighter pastel green
+
+        var body: some View {
+            VStack {
+                Spacer()
+                VStack(alignment: .leading, spacing: 20) {
+                    HStack {
+                        Spacer()
+                        Button(action: {
+                            withAnimation {
+                                showTutorial = false
+                            }
+                        }) {
+                            Image(systemName: "xmark.circle")
+                                .font(.title2)
+                                .foregroundColor(.secondary)
+                        }
+                    }
+                    
+                    VStack(alignment: .leading, spacing: 12) {
+                        Text("Welcome to Parent AI!")
+                            .font(.title2)
+                            .fontWeight(.bold)
+                            .foregroundColor(.black)
+                            .padding(.bottom, 10)
+
+                        TutorialStepView(iconName: "message.fill", text: "Chat and share your thoughts.")
+                        TutorialStepView(iconName: "hand.raised.fill", text: "Find support and guidance.")
+                        TutorialStepView(iconName: "star.fill", text: "Celebrate your achievements!")
+                    }
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 20)
+                    .background(Color.white)
+                    .cornerRadius(25)
+                    .shadow(color: .gray.opacity(0.4), radius: 20, x: 0, y: 10)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 25)
+                            .stroke(cuteGreen, lineWidth: 4)
+                    )
+                }
+                .padding(.horizontal)
+                Spacer()
+            }
+            .background(
+                cuteGreen.opacity(0.4)
+                    .edgesIgnoringSafeArea(.all)
+                    .onTapGesture {
+                        withAnimation {
+                            showTutorial = false
+                        }
+                    }
+            )
+            .transition(.scale)
+        }
+    }
+
+    struct TutorialStepView: View {
+        var iconName: String
+        var text: String
+
+        var body: some View {
+            HStack {
+                Image(systemName: iconName)
+                    .foregroundColor(.green)
+                    .font(.title3)
+                    .frame(width: 30)
+                Text(text)
+                    .fontWeight(.medium)
+                    .foregroundColor(.black)
+                    .font(.body)
+                Spacer()
+            }
+            .padding(.vertical, 4)
         }
     }
     
@@ -35,7 +118,7 @@ struct GuidanceHomeView: View {
             Spacer()
             Spacer()
             Spacer()
-            Text("Guidance AI")
+            Text("Parent AI")
                 .font(.largeTitle) // Large and easy to read
                 .fontWeight(.bold) // Make it bold
                 .foregroundColor(Color.green.opacity(0.65)) // Warm color for the text
@@ -133,11 +216,3 @@ struct GuidanceHomeView: View {
 #Preview {
     GuidanceHomeView()
 }
-
-
-// Need to implement conversation persistance?
-// Do I need to pass data back into the api to maintain the conversation? What happens to previous conversation resopnses?
-    // How does the engine work off of previous convos is the question
-
-// I think the backend stores the responses
-// The frontend would just send another prompts out, for another response from the engine

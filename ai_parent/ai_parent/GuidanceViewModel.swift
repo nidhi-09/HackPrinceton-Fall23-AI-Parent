@@ -23,6 +23,9 @@ class GuidanceViewModel: ObservableObject {
     private var typingTimer: Timer?
     private var currentIndex = 0
     
+    let userName = UserDefaults.standard.string(forKey: "UserName") ?? "kid"
+    let userAge = UserDefaults.standard.string(forKey: "UserAge") ?? "the same "
+    
 // When the user submits a prompt, we start waiting for the response.
     func submitPrompt() {
         self.isWaitingForResponse = true
@@ -79,7 +82,7 @@ class GuidanceViewModel: ObservableObject {
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         
         // Convert your prompt into JSON
-        let body: [String: Any] = ["prompt": prompt]
+        let body: [String: Any] = ["prompt": prompt + "Also my name is \(userName) and I'm \(userAge) years old."]
         request.httpBody = try? JSONSerialization.data(withJSONObject: body)
         
         // Perform the network request
